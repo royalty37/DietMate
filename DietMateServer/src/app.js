@@ -1,15 +1,18 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import authRoutes from './routes/authRoutes';
+require('./models/User');
 
-const app = express();
+const express = require('express');
+const mongoose = require('mongoose');
+const authRoutes = require('./routes/authRoutes');
+const requireAuth = require('./middlewares/requireAuth');
+
 const dotenv = require('dotenv').config();
+const app = express();
 
-app.use(authRoutes);
-app.use(express.json());
 app.use(express.urlencoded({
   extended: true
 }));
+app.use(express.json());
+app.use(authRoutes);
 
 mongoose.connect(process.env.MONGODB_URI);
 mongoose.connection.on('connected', () => {
@@ -19,8 +22,8 @@ mongoose.connection.on('error', error => {
   console.error("Error connecting to MongoDB", error);
 })
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+app.get('/', requireAuth, (req, res) => {
+  res.send(`Your email: ${req.user.email}`);
 });
 
 app.listen(process.env.PORT || 3000, () => {
