@@ -1,16 +1,35 @@
 import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import { StyleSheet, Text, View } from 'react-native';
+import { enableScreens } from "react-native-screens";
 
-export default function App() {
-};
+import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
+import SigninScreen from './src/screens/SigninScreen';
+import SignupScreen from './src/screens/SignupScreen';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+import { Provider as AuthProvider } from './src/context/AuthContext';
+
+import { setNavigator } from './src/navigationRef';
+
+const switchNavigator = createSwitchNavigator({
+  ResolveAuth: ResolveAuthScreen,
+  LoginFlow: createStackNavigator({
+    Signup: SignupScreen,
+    Signin: SigninScreen,
+  }),
+  // MainFlow: createStackNavigator({
+  //   Home: HomeScreen,
+  // }, {
+  //   initialRouteName: 'Home',
+  // }),
 });
+
+const App = createAppContainer(switchNavigator);
+
+export default () => {
+  return (
+    <AuthProvider>
+      <App ref={(navigator) => setNavigator(navigator)}/>
+    </AuthProvider>
+  );
+};

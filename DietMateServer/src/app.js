@@ -1,8 +1,10 @@
 require('./models/User');
+require('./models/FoodList');
 
 const express = require('express');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
+const foodRoutes = require('./routes/foodRoutes');
 const requireAuth = require('./middlewares/requireAuth');
 
 const dotenv = require('dotenv').config();
@@ -13,6 +15,7 @@ app.use(express.urlencoded({
 }));
 app.use(express.json());
 app.use(authRoutes);
+app.use(foodRoutes);
 
 mongoose.connect(process.env.MONGODB_URI);
 mongoose.connection.on('connected', () => {
