@@ -67,15 +67,14 @@ const SignupScreen = ({ navigation }) => {
                     secureTextEntry
                 />
             </View>
-            <View>
-                {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
+            {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
+            <View style={styles.buttonContainer}>
                 <Button
                     buttonStyle={styles.button}
-                    containerStyle={styles.buttonContainer}
                     title="Sign Up"
                     onPress={() => submit()}
                 />
-                <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+                <TouchableOpacity onPress={() => navigation.navigate('Signin')}>
                     <View style={styles.signupLink}>
                         <Text style={styles.signupLink}>{`Already have an account?\nSign in instead`}</Text>
                     </View>
@@ -94,12 +93,15 @@ SignupScreen.navigationOptions = () => {
 const styles = StyleSheet.create({
     button: {
         paddingVertical: 10,
+        borderRadius: 15,
         backgroundColor: "#3A3B3C",
     },
     buttonContainer: {
-        borderRadius: 20,
         alignSelf: "center",
-        width: "60%",
+        width: "80%",
+        flex: 1,
+        justifyContent: 'flex-end',
+        marginBottom: 30,
     },
     signupLink: {
         color: "black",
@@ -108,7 +110,6 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginTop: "2%",
         textAlign: "center",
-        
     },
     errorMessage: {
         color: "red",
@@ -119,7 +120,6 @@ const styles = StyleSheet.create({
     },
     input: {
         alignSelf: "center",
-        paddingVertical: 4,
         width: "90%",
         fontSize: 16,
         fontWeight: "bold",

@@ -13,7 +13,7 @@ const SigninScreen = ({ navigation }) => {
     //let [fontsLoaded] = useFonts({ Roboto_400Regular });
 
     return (
-        <View styles={styles.container}>
+        <View style={styles.container}>
             <Text style={styles.title}>DietMate</Text>
             <NavigationEvents onWillFocus={clearErrorMessage} />
             <View style={styles.input}>
@@ -40,17 +40,18 @@ const SigninScreen = ({ navigation }) => {
             />
             </View>
             {state.errorMessage ? <Text style={styles.errorMessage}>{state.errorMessage}</Text> : null}
-            <Button
-                buttonStyle={styles.button}
-                containerStyle={styles.buttonContainer}
-                title="Sign In"
-                onPress={() => signin({ email, password })}
-            />
-            <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-                <View style={styles.signupLink}>
-                <Text style={styles.signupLink}>Don't have an account? Sign up here</Text>
-                </View>
-            </TouchableOpacity>
+            <View style={styles.buttonContainer}>
+                <Button
+                    buttonStyle={styles.button}
+                    title="Sign In"
+                    onPress={() => signin({ email, password })}
+                />
+                <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+                    <View style={styles.signupLink}>
+                    <Text style={styles.signupLink}>Don't have an account? Sign up here</Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
@@ -64,12 +65,15 @@ SigninScreen.navigationOptions = () => {
 const styles = StyleSheet.create({
     button: {
         paddingVertical: 10,
+        borderRadius: 15,
         backgroundColor: "#3A3B3C",
     },
     buttonContainer: {
-        borderRadius: 20,
         alignSelf: "center",
-        width: "60%",
+        width: "80%",
+        flex: 1,
+        justifyContent: 'flex-end',
+        marginBottom: 30,
     },
     signupLink: {
         color: "black",
@@ -87,7 +91,6 @@ const styles = StyleSheet.create({
     },
     input: {
         alignSelf: "center",
-        paddingVertical: 4,
         width: "90%",
         fontSize: 16,
         fontWeight: "bold",
@@ -101,7 +104,6 @@ const styles = StyleSheet.create({
         marginTop: "15%",
         marginBottom: "10%",
         alignSelf: "center",
-        //fontFamily: "Roboto_500Regular",
     },
     container: {
         flex: 1,

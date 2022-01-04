@@ -24,3 +24,5 @@ router.post('/foodlist', async (req, res) => {
     await foodlistToSave.save();
     res.send(foodlistToSave);
 });
+
+module.exports = router;

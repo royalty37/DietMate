@@ -23,7 +23,7 @@ const signin = (dispatch) => async ({ email, password }) => {
         const response = await axiosApi.post('/signin', { email, password });
         await AsyncStorage.setItem('token', response.data.token);
         dispatch({ type: 'signin', payload: response.data.token });
-        //navigate('MainFlow');
+        navigate('MainFlow');
     } catch (err) {
         dispatch({ type: 'add_error', payload: 'Something went wrong with sign in' });
     }
@@ -39,7 +39,7 @@ const tryLocalSignin = (dispatch) => async () => {
     const token = await AsyncStorage.getItem('token');
     if (token) {
         dispatch({ type: 'signin', payload: token });
-        //return navigate('MainFlow');
+        return navigate('MainFlow');
     } else {
         navigate('Signin');
     }

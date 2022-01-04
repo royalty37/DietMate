@@ -6,6 +6,7 @@ import { enableScreens } from "react-native-screens";
 import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 import SigninScreen from './src/screens/SigninScreen';
 import SignupScreen from './src/screens/SignupScreen';
+import HomeScreen from './src/screens/HomeScreen';
 
 import { Provider as AuthProvider } from './src/context/AuthContext';
 
@@ -17,11 +18,11 @@ const switchNavigator = createSwitchNavigator({
     Signup: SignupScreen,
     Signin: SigninScreen,
   }),
-  // MainFlow: createStackNavigator({
-  //   Home: HomeScreen,
-  // }, {
-  //   initialRouteName: 'Home',
-  // }),
+  MainFlow: createStackNavigator({
+    Home: HomeScreen,
+  }, {
+    initialRouteName: 'Home',
+  }),
 });
 
 const App = createAppContainer(switchNavigator);

@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({
-    baseURL: 'https://dietmate-server.herokuapp.com/api/',
+    baseURL: 'https://e9941d559de5.ngrok.io',
 });
