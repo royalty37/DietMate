@@ -1,8 +1,15 @@
-const LOSE_WEIGHT_FAST_GOAL = 0;
-const LOSE_WEIGHT_GOAL = 1;
+const LOSE_WEIGHT_FAST = 0;
+const LOSE_WEIGHT = 1;
 const MAINTAIN_WEIGHT = 2;
-const GAIN_WEIGHT_GOAL = 3;
-const GAIN_WEIGHT_FAST_GOAL = 4;
+const GAIN_WEIGHT = 3;
+const GAIN_WEIGHT_FAST = 4;
+
+const SEDENTARY = 0;
+const LIGHTLY_ACTIVE = 1;
+const MODERATELY_ACTIVE = 2;
+const ACTIVE = 3;
+const VERY_ACTIVE = 4;
+const EXTREMELY_ACTIVE = 5;
 
 const MALE = 0;
 const FEMALE = 1;
@@ -17,12 +24,94 @@ class Diet {
         this.activityLevel = activityLevel;
         this.weightlifter = weightlifter;
         this.overweight = overweight;
-        this.protein = protein;
-        this.carbs = carbs;
-        this.fat = fat;
-        this.calories = calories;
+        
+        this.calcCalories();
+        this.calcProtein();
+        this.calcFat();
+        this.calcCarbs();
+
+        console.log("Calories: "+this.calories);
+        console.log("Protein: "+this.protein);
+        console.log("Fat: "+this.fat);
+        console.log("Carbs: "+this.carbs);
     }
 
+    // Calculate the calories needed for the diet goal
+    calcCalories() {
+        let genderS = (this.gender === MALE) ? 5 : -161;
+        let bmr = 10 * this.weight+6.25*this.height-5*this.age+genderS;
+
+        let activityLevelCalories = 0;
+        switch (this.activityLevel) {
+            case SEDENTARY:
+                activityLevelCalories =  bmr * 1.2;
+                break;
+            case LIGHTLY_ACTIVE:              
+                activityLevelCalories =  bmr * 1.37;
+                break;
+            case MODERATELY_ACTIVE:
+                activityLevelCalories =  bmr * 1.46;
+                break;
+            case ACTIVE:
+                activityLevelCalories =  bmr * 1.54;
+                break;
+            case VERY_ACTIVE:
+                activityLevelCalories =  bmr * 1.72;
+                break;
+            case EXTREMELY_ACTIVE:
+                activityLevelCalories =  bmr * 1.89;
+        }
+
+        switch (this.dietGoal) {
+            case LOSE_WEIGHT_FAST:
+                this.calories = activityLevelCalories - 1000;
+                break;
+            case LOSE_WEIGHT:
+                this.calories = activityLevelCalories - 500;
+                break;
+            case MAINTAIN_WEIGHT:
+                this.calories = activityLevelCalories;
+                break;
+            case GAIN_WEIGHT:
+                this.calories = activityLevelCalories + 500;
+                break;
+            case GAIN_WEIGHT_FAST:
+                this.calories = activityLevelCalories + 1000;
+        }
+    }
+
+    calcProtein() {
+        if (this.overweight === true) {
+            if (this.weightlifter === true) 
+                this.protein = 1.4 * this.weight;
+            else
+                this.protein = 0.8 * this.weight;
+        } else {
+            if (this.weightlifter === true) {
+                if (this.dietGoal === LOSE_WEIGHT || this.dietGoal === LOSE_WEIGHT_FAST)
+                    this.protein = 1.8 * this.weight;
+                else
+                    this.protein = 1.6 * this.weight;
+            } else {
+                if (this.activityLevel == SEDENTARY)
+                    this.protein = 0.8 * this.weight;
+                else if (this.activityLevel == VERY_ACTIVE || this.activityLevel == EXTREMELY_ACTIVE)
+                    this.protein = 1.2 * this.weight;
+                else
+                    this.protein = 1.0 * this.weight;
+            }
+        }
+    }
+
+    calcFat() {
+        this.fat = this.weight * 0.85;
+    }
+
+    calcCarbs() {
+        this.carbs = this.calories - this.protein * 4 - this.fat * 9;
+    }
+
+    // Getters and Setters for all ...fields?
     get dietGoal() {
         return this.dietGoal;
     }
@@ -125,33 +214,5 @@ class Diet {
 
     set foods(foods) {
         this.foods = foods;
-    }
-
-    static get LOSE_WEIGHT_FAST_GOAL() {
-        return LOSE_WEIGHT_FAST_GOAL;
-    }
-
-    static get LOSE_WEIGHT_GOAL() {
-        return LOSE_WEIGHT_GOAL;
-    }
-
-    static get MAINTAIN_WEIGHT() {
-        return MAINTAIN_WEIGHT;
-    }
-
-    static get GAIN_WEIGHT_GOAL() {
-        return GAIN_WEIGHT_GOAL;
-    }
-
-    static get GAIN_WEIGHT_FAST_GOAL() {
-        return GAIN_WEIGHT_FAST_GOAL;
-    }
-
-    static get MALE() {
-        return MALE;
-    }
-
-    static get FEMALE() {
-        return FEMALE;
     }
 }
