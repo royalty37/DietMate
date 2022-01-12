@@ -2,11 +2,14 @@ import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { enableScreens } from "react-native-screens";
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider as PaperProvider } from 'react-native-paper';
 
 import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 import SigninScreen from './src/screens/SigninScreen';
 import SignupScreen from './src/screens/SignupScreen';
 import HomeScreen from './src/screens/HomeScreen';
+import CreateDietScreen from './src/screens/CreateDietScreen';
 
 import { Provider as AuthProvider } from './src/context/AuthContext';
 
@@ -20,6 +23,7 @@ const switchNavigator = createSwitchNavigator({
   }),
   MainFlow: createStackNavigator({
     Home: HomeScreen,
+    CreateDiet: CreateDietScreen,
   }, {
     initialRouteName: 'Home',
   }),
@@ -29,8 +33,12 @@ const App = createAppContainer(switchNavigator);
 
 export default () => {
   return (
-    <AuthProvider>
-      <App ref={(navigator) => setNavigator(navigator)}/>
-    </AuthProvider>
+    <PaperProvider>
+      <SafeAreaProvider>
+        <AuthProvider>
+          <App ref={(navigator) => setNavigator(navigator)}/>
+        </AuthProvider>
+      </SafeAreaProvider>
+    </PaperProvider>
   );
 };

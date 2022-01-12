@@ -16,28 +16,28 @@ const HomeScreen = ({ navigation }) => {
                 <Button
                     buttonStyle={styles.button}
                     title="New Diet"
-                    onPress={() => submit()}
+                    onPress={() => navigation.navigate('CreateDiet')}
                 />
                 <Button
                     buttonStyle={styles.button}
                     title="Existing Diets"
-                    onPress={() => submit()}
+                    //onPress={() => submit()}
                 />
                 <Button
                     buttonStyle={styles.button}
                     title="Custom Foods/Meals"
-                    onPress={() => submit()}
+                    //onPress={() => submit()}
                 />
                 <View style={styles.footerContainer}>
                     <Button
                         buttonStyle={styles.button}
                         title="Settings"
-                        onPress={() => submit()}
+                        //onPress={() => submit()}
                     />
                     <Button
                         buttonStyle={styles.button}
                         title="Sign Out"
-                        onPress={() => signout()}
+                        //onPress={() => signout()}
                     />
                 </View>
             </View>
