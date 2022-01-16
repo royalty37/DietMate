@@ -15,25 +15,20 @@ const MALE = 0;
 const FEMALE = 1;
 
 class Diet {
-    constructor(dietGoal, age, gender, height, weight, activityLevel, weightlifter, overweight, protein, carbs, fat, calories, foods) {
+    constructor(dietGoal, age, gender, height, weight, activityLevel, isWeightlifter, isOverweight) {
         this.dietGoal = dietGoal;
         this.age = age;
         this.gender = gender;
         this.height = height;
         this.weight = weight;
         this.activityLevel = activityLevel;
-        this.weightlifter = weightlifter;
-        this.overweight = overweight;
+        this.isWeightlifter = isWeightlifter;
+        this.isOverweight = isOverweight;
         
         this.calcCalories();
         this.calcProtein();
         this.calcFat();
         this.calcCarbs();
-
-        console.log("Calories: "+this.calories);
-        console.log("Protein: "+this.protein);
-        console.log("Fat: "+this.fat);
-        console.log("Carbs: "+this.carbs);
     }
 
     // Calculate the calories needed for the diet goal
@@ -81,13 +76,13 @@ class Diet {
     }
 
     calcProtein() {
-        if (this.overweight === true) {
-            if (this.weightlifter === true) 
+        if (this.isOverweight === true) {
+            if (this.isWeightlifter === true) 
                 this.protein = 1.4 * this.weight;
             else
                 this.protein = 0.8 * this.weight;
         } else {
-            if (this.weightlifter === true) {
+            if (this.isWeightlifter === true) {
                 if (this.dietGoal === LOSE_WEIGHT || this.dietGoal === LOSE_WEIGHT_FAST)
                     this.protein = 1.8 * this.weight;
                 else
@@ -108,111 +103,127 @@ class Diet {
     }
 
     calcCarbs() {
-        this.carbs = this.calories - this.protein * 4 - this.fat * 9;
+        this.carbs = (this.calories - this.protein * 4 - this.fat * 9) / 4;
     }
+
+    printDiet() {
+        console.log("Diet Goal: " + this.dietGoal);
+        console.log("Age: " + this.age);
+        console.log("Height: " + this.height);
+        console.log("Weight: " + this.weight);
+        console.log("Activity Level: " + this.activityLevel);
+        console.log("Is Weightlifter: " + this.isWeightlifter);
+        console.log("Is Overweight: " + this.isOverweight);
+        console.log("Calories: " + this.calories);
+        console.log("Protein: " + this.protein);
+        console.log("Fat: " + this.fat);
+        console.log("Carbs: " + this.carbs);
+    };
 
     // Getters and Setters for all ...fields?
-    get dietGoal() {
-        return this.dietGoal;
-    }
+    // get dietGoal() {
+    //     return this.dietGoal;
+    // }
 
-    set dietGoal(dietGoal) {
-        this.dietGoal = dietGoal;
-    }
+    // set dietGoal(dietGoal) {
+    //     this.dietGoal = dietGoal;
+    // }
 
-    get age() {
-        return this.age;
-    }
+    // get age() {
+    //     return this.age;
+    // }
 
-    set age(age) {
-        this.age = age;
-    }
+    // set age(age) {
+    //     this.age = age;
+    // }
 
-    get gender() {
-        return this.gender;
-    }
+    // get gender() {
+    //     return this.gender;
+    // }
 
-    set gender(gender) {
-        this.gender = gender;
-    }
+    // set gender(gender) {
+    //     this.gender = gender;
+    // }
 
-    get height() {
-        return this.height;
-    }
+    // get height() {
+    //     return this.height;
+    // }
 
-    set height(height) {
-        this.height = height;
-    }
+    // set height(height) {
+    //     this.height = height;
+    // }
 
-    get weight() {
-        return this.weight;
-    }
+    // get weight() {
+    //     return this.weight;
+    // }
 
-    set weight(weight) {
-        this.weight = weight;
-    }
+    // set weight(weight) {
+    //     this.weight = weight;
+    // }
 
-    get activityLevel() {
-        return this.activityLevel;
-    }
+    // get activityLevel() {
+    //     return this.activityLevel;
+    // }
 
-    set activityLevel(activityLevel) {
-        this.activityLevel = activityLevel;
-    }
+    // set activityLevel(activityLevel) {
+    //     this.activityLevel = activityLevel;
+    // }
 
-    get weightlifter() {
-        return this.weightlifter;
-    }
+    // get weightlifter() {
+    //     return this.weightlifter;
+    // }
 
-    set weightlifter(weightlifter) {
-        this.weightlifter = weightlifter;
-    }
+    // set weightlifter(weightlifter) {
+    //     this.weightlifter = weightlifter;
+    // }
 
-    get overweight() {
-        return this.overweight;
-    }
+    // get overweight() {
+    //     return this.overweight;
+    // }
 
-    set overweight(overweight) {
-        this.overweight = overweight;
-    }
+    // set overweight(overweight) {
+    //     this.overweight = overweight;
+    // }
 
-    get protein() {
-        return this.protein;
-    }
+    // get protein() {
+    //     return this.protein;
+    // }
 
-    set protein(protein) {
-        this.protein = protein;
-    }
+    // set protein(protein) {
+    //     this.protein = protein;
+    // }
 
-    get carbs() {
-        return this.carbs;
-    }
+    // get carbs() {
+    //     return this.carbs;
+    // }
 
-    set carbs(carbs) {
-        this.carbs = carbs;
-    }
+    // set carbs(carbs) {
+    //     this.carbs = carbs;
+    // }
 
-    get fat() {
-        return this.fat;
-    }
+    // get fat() {
+    //     return this.fat;
+    // }
 
-    set fat(fat) {
-        this.fat = fat;
-    }
+    // set fat(fat) {
+    //     this.fat = fat;
+    // }
 
-    get calories() {
-        return this.calories;
-    }
+    // get calories() {
+    //     return this.calories;
+    // }
 
-    set calories(calories) {
-        this.calories = calories;
-    }
+    // set calories(calories) {
+    //     this.calories = calories;
+    // }
 
-    get foods() {
-        return this.foods;
-    }
+    // get foods() {
+    //     return this.foods;
+    // }
 
-    set foods(foods) {
-        this.foods = foods;
-    }
+    // set foods(foods) {
+    //     this.foods = foods;
+    // }
 }
+
+export default Diet;

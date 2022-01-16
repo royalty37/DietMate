@@ -38,7 +38,23 @@ const CreateDietScreen = ({ navigation }) => {
     const [loading, setLoading] = useState(false);
 
     const submit = async () => {
-        const newDiet = new Diet(dietGoal, age, gender, height, weight, activityLevel, isWeightlifter, isOverweight);
+        if (age === "") {
+            Alert.alert("Please enter your age.");
+        } else if (isNaN(age)) {
+            Alert.alert("Please enter a valid age.");
+        } else if (height === "") {
+            Alert.alert("Please enter your height.");
+        } else if (isNaN(height)) {
+            Alert.alert("Please enter a valid height.");
+        } else if (weight === "") {
+            Alert.alert("Please enter your weight.");
+        } else if (isNaN(weight)) {
+            Alert.alert("Please enter a valid weight.");
+        } else {
+            console.log("Submitting...");
+            const newDiet = new Diet(dietGoal, parseInt(age), gender, parseInt(height), parseInt(weight), activityLevel, isWeightlifter, isOverweight);
+            newDiet.printDiet();
+        }
     };
 
     return loading ? <ActivityIndicator size="large" /> : 
@@ -48,7 +64,7 @@ const CreateDietScreen = ({ navigation }) => {
                 <View style={styles.titleGroupContainer}>
                     <Text style={styles.label}>Gender</Text>
                     <View style={styles.rowGroupContainer}>
-                        <View style={{ flexDirection: "row"}}>
+                        <View style={styles.radioButtonView}>
                             <RadioButton 
                                 value="0" // Male
                                 status={gender === 0 ? 'checked' : 'unchecked'}
@@ -56,7 +72,7 @@ const CreateDietScreen = ({ navigation }) => {
                             />
                             <Text style={styles.radioButtonLabel}>Male</Text>
                         </View>
-                        <View style={{ flexDirection: "row"}}>
+                        <View style={styles.radioButtonView}>
                             <RadioButton
                                 value="1" // Female
                                 status={gender === 1 ? 'checked' : 'unchecked'}
@@ -72,6 +88,7 @@ const CreateDietScreen = ({ navigation }) => {
                     onChangeText={setAge}
                     autoCapitalize='none'
                     autoCorrect={false}
+                    keyboardType='numeric'
                     inputStyle={styles.input}
                     labelStyle={styles.inputLabel}
                     leftIcon={{ type: "material-icons", name: "person" }}
@@ -82,6 +99,7 @@ const CreateDietScreen = ({ navigation }) => {
                     onChangeText={setHeight}
                     autoCapitalize='none'
                     autoCorrect={false}
+                    keyboardType='numeric'
                     inputStyle={styles.input}
                     labelStyle={styles.inputLabel}
                     leftIcon={{ type: "material-community", name: "human-male-height" }}          
@@ -92,6 +110,7 @@ const CreateDietScreen = ({ navigation }) => {
                     onChangeText={setWeight}
                     autoCapitalize='none'
                     autoCorrect={false}
+                    keyboardType='numeric'
                     inputStyle={styles.input}
                     labelStyle={styles.inputLabel}
                     leftIcon={{ type: "font-awesome-5", name: "weight" }}
@@ -127,7 +146,7 @@ const CreateDietScreen = ({ navigation }) => {
                 <View style={styles.titleGroupContainer}>
                     <Text style={styles.label}>Do you weightlift?</Text>
                     <View style={styles.rowGroupContainer}>
-                        <View style={{ flexDirection: "row"}}>
+                        <View style={styles.radioButtonView}>
                             <RadioButton 
                                 value="true"
                                 status={isWeightlifter === true ? 'checked' : 'unchecked'}
@@ -135,7 +154,7 @@ const CreateDietScreen = ({ navigation }) => {
                             />
                             <Text style={styles.radioButtonLabel}>Yes</Text>
                         </View>
-                        <View style={{ flexDirection: "row"}}>
+                        <View style={styles.radioButtonView}>
                             <RadioButton
                                 value="false"
                                 status={isWeightlifter === false ? 'checked' : 'unchecked'}
@@ -148,7 +167,7 @@ const CreateDietScreen = ({ navigation }) => {
                 <View style={styles.titleGroupContainer}>
                     <Text style={styles.label}>Are you overweight?</Text>
                     <View style={styles.rowGroupContainer}>
-                        <View style={{ flexDirection: "row"}}>
+                        <View style={styles.radioButtonView}>
                             <RadioButton 
                                 value="true"
                                 status={isOverweight === true ? 'checked' : 'unchecked'}
@@ -156,13 +175,13 @@ const CreateDietScreen = ({ navigation }) => {
                             />
                             <Text style={styles.radioButtonLabel}>Yes</Text>
                         </View>
-                        <View style={{ flexDirection: "row"}}>
+                        <View style={styles.radioButtonView}>
                             <RadioButton
                                 value="false"
                                 status={isOverweight === false ? 'checked' : 'unchecked'}
                                 onPress={() => setIsOverweight(false)}
                             />
-                            <Text style={styles.radioButtonLabel}>Female</Text>
+                            <Text style={styles.radioButtonLabel}>No</Text>
                         </View>
                     </View>
                 </View>
@@ -170,7 +189,7 @@ const CreateDietScreen = ({ navigation }) => {
                     <Button
                         buttonStyle={styles.button}
                         title="Next"
-                        //onPress={() => navigation.navigate('CreateDiet')}
+                        onPress={() => submit()}
                     />
                 </View>
             </SafeAreaView>
@@ -196,6 +215,10 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "black",
         alignSelf: "center",
+    },
+    radioButtonView: {
+        flexDirection: "row",
+        flex: 1,
     },
     button: {
         marginTop: 50,
@@ -246,7 +269,7 @@ const styles = StyleSheet.create({
     },
     rowGroupContainer: {
         flexDirection: "row",
-        justifyContent: "space-around",
+        justifyContent: "space-between",
         width: "80%",
     },
     titleGroupContainer: {
