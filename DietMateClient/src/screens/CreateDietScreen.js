@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity, Platform, Alert, SafeAreaView, ScrollView } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Platform, Alert, SafeAreaView, ScrollView, ActivityIndicator } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import { Text, Button, Input, Divider } from 'react-native-elements';
 import { Context as AuthContext } from '../context/AuthContext';
@@ -7,10 +7,10 @@ import { RadioButton } from 'react-native-paper';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 const CreateDietScreen = ({ navigation }) => {
-    const [age, setAge] = useState("");
     const [gender, setGender] = useState(0);
-    const [height, setHeight] = useState(0);
-    const [weight, setWeight] = useState(0);
+    const [age, setAge] = useState("");
+    const [height, setHeight] = useState("");
+    const [weight, setWeight] = useState("");
     const [dietGoal, setDietGoal] = useState(0);
     const [dietGoalItems, setDietGoalItems] = useState([
         {label: 'Lose weight fast (1kg per week)', value: 0},
@@ -34,7 +34,10 @@ const CreateDietScreen = ({ navigation }) => {
     const [dietOpen, setDietOpen] = useState(false);
     const [activityLevelOpen, setActivityLevelOpen] = useState(false);
 
-    return (
+    const [loading, setLoading] = useState(false);
+
+    return loading ? <ActivityIndicator size="large" /> : 
+    (
         <ScrollView style={styles.container}>
             <SafeAreaView style={styles.input}>              
                 <View style={styles.titleGroupContainer}>
@@ -158,10 +161,23 @@ const CreateDietScreen = ({ navigation }) => {
                         </View>
                     </View>
                 </View>
+                <View style={styles.buttonContainer}>
+                    <Button
+                        buttonStyle={styles.button}
+                        title="Next"
+                        //onPress={() => navigation.navigate('CreateDiet')}
+                    />
+                </View>
             </SafeAreaView>
         </ScrollView>
     )
 };
+
+CreateDietScreen.navigationOptions = () => {
+    return {
+        title: "Enter details for new diet",
+    };
+}
 
 const styles = StyleSheet.create({
     label: {
@@ -177,6 +193,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
     },
     button: {
+        marginTop: 50,
         paddingVertical: 10,
         borderRadius: 15,
         backgroundColor: "#3A3B3C",
