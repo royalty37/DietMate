@@ -5,6 +5,7 @@ import { Text, Button, Input, Divider } from 'react-native-elements';
 import { Context as AuthContext } from '../context/AuthContext';
 import { RadioButton } from 'react-native-paper';
 import DropDownPicker from 'react-native-dropdown-picker';
+import Diet from '../classes/diet';
 
 const CreateDietScreen = ({ navigation }) => {
     const [gender, setGender] = useState(0);
@@ -35,6 +36,10 @@ const CreateDietScreen = ({ navigation }) => {
     const [activityLevelOpen, setActivityLevelOpen] = useState(false);
 
     const [loading, setLoading] = useState(false);
+
+    const submit = async () => {
+        const newDiet = new Diet(dietGoal, age, gender, height, weight, activityLevel, isWeightlifter, isOverweight);
+    };
 
     return loading ? <ActivityIndicator size="large" /> : 
     (
