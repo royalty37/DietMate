@@ -97,6 +97,9 @@ const CreateDietScreen = ({ navigation }) => {
                         setOpen={setDietOpen}
                         setValue={setDietGoal}
                         setItems={setDietGoalItems}
+                        listMode="SCROLLVIEW"
+                        zIndex={3000}
+                        zIndexInverse={1000}
                     />
                 </View>
                 <View style={styles.titleGroupContainer}>
@@ -108,6 +111,9 @@ const CreateDietScreen = ({ navigation }) => {
                         setOpen={setActivityLevelOpen}
                         setValue={setActivityLevel}
                         setItems={setActivityLevelItems}
+                        listMode="SCROLLVIEW"
+                        zIndex={1000}
+                        zIndexInverse={3000}
                     />
                 </View>
                 <View style={styles.titleGroupContainer}>
