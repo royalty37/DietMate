@@ -35,9 +35,9 @@ const CreateDietScreen = ({ navigation }) => {
     const [dietOpen, setDietOpen] = useState(false);
     const [activityLevelOpen, setActivityLevelOpen] = useState(false);
 
-    const [loading, setLoading] = useState(false);
+    const [weightlifterRadioButtonEnabled, setWeightlifterRadioButtonEnabled] = useState(false);
 
-    const submit = async () => {
+    const submit = () => {
         if (age === "") {
             Alert.alert("Please enter your age.");
         } else if (isNaN(age)) {
@@ -51,14 +51,13 @@ const CreateDietScreen = ({ navigation }) => {
         } else if (isNaN(weight)) {
             Alert.alert("Please enter a valid weight.");
         } else {
-            console.log("Submitting...");
             const newDiet = new Diet(dietGoal, parseInt(age), gender, parseInt(height), parseInt(weight), activityLevel, isWeightlifter, isOverweight);
             newDiet.printDiet();
+            navigation.navigate('Nutrition', { newDiet : newDiet });
         }
     };
 
-    return loading ? <ActivityIndicator size="large" /> : 
-    (
+    return  (
         <ScrollView style={styles.container}>
             <SafeAreaView style={styles.input}>              
                 <View style={styles.titleGroupContainer}>
@@ -141,6 +140,13 @@ const CreateDietScreen = ({ navigation }) => {
                         listMode="SCROLLVIEW"
                         zIndex={1000}
                         zIndexInverse={3000}
+                        onChangeValue={(value) => {
+                            if (value === 0) {
+                                setWeightlifterRadioButtonEnabled(false);
+                                setIsWeightlifter(false);
+                            } else 
+                                setWeightlifterRadioButtonEnabled(true);                          
+                        }}
                     />
                 </View>
                 <View style={styles.titleGroupContainer}>
@@ -151,6 +157,7 @@ const CreateDietScreen = ({ navigation }) => {
                                 value="true"
                                 status={isWeightlifter === true ? 'checked' : 'unchecked'}
                                 onPress={() => setIsWeightlifter(true)}
+                                disabled={!weightlifterRadioButtonEnabled}
                             />
                             <Text style={styles.radioButtonLabel}>Yes</Text>
                         </View>
@@ -159,6 +166,7 @@ const CreateDietScreen = ({ navigation }) => {
                                 value="false"
                                 status={isWeightlifter === false ? 'checked' : 'unchecked'}
                                 onPress={() => setIsWeightlifter(false)}
+                                disabled={!weightlifterRadioButtonEnabled}
                             />
                             <Text style={styles.radioButtonLabel}>No</Text>
                         </View>

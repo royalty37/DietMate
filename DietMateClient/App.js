@@ -10,6 +10,7 @@ import SigninScreen from './src/screens/SigninScreen';
 import SignupScreen from './src/screens/SignupScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import CreateDietScreen from './src/screens/CreateDietScreen';
+import NutritionScreen from './src/screens/NutritionScreen';
 
 import { Provider as AuthProvider } from './src/context/AuthContext';
 
@@ -24,6 +25,7 @@ const switchNavigator = createSwitchNavigator({
   MainFlow: createStackNavigator({
     Home: HomeScreen,
     CreateDiet: CreateDietScreen,
+    Nutrition: NutritionScreen,
   }, {
     initialRouteName: 'Home',
   }),

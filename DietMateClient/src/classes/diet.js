@@ -59,51 +59,51 @@ class Diet {
 
         switch (this.dietGoal) {
             case LOSE_WEIGHT_FAST:
-                this.calories = activityLevelCalories - 1000;
+                this.calories = (activityLevelCalories - 1000).toFixed(1);
                 break;
             case LOSE_WEIGHT:
-                this.calories = activityLevelCalories - 500;
+                this.calories = (activityLevelCalories - 500).toFixed(1);
                 break;
             case MAINTAIN_WEIGHT:
-                this.calories = activityLevelCalories;
+                this.calories = (activityLevelCalories).toFixed(1);
                 break;
             case GAIN_WEIGHT:
-                this.calories = activityLevelCalories + 500;
+                this.calories = (activityLevelCalories + 500).toFixed(1);
                 break;
             case GAIN_WEIGHT_FAST:
-                this.calories = activityLevelCalories + 1000;
+                this.calories = (activityLevelCalories + 1000).toFixed(1);
         }
     }
 
     calcProtein() {
         if (this.isOverweight === true) {
             if (this.isWeightlifter === true) 
-                this.protein = 1.4 * this.weight;
+                this.protein = (1.4 * this.weight).toFixed(1);
             else
-                this.protein = 0.8 * this.weight;
+                this.protein = (0.8 * this.weight).toFixed(1);
         } else {
             if (this.isWeightlifter === true) {
                 if (this.dietGoal === LOSE_WEIGHT || this.dietGoal === LOSE_WEIGHT_FAST)
-                    this.protein = 1.8 * this.weight;
+                    this.protein = (1.8 * this.weight).toFixed(1);
                 else
-                    this.protein = 1.6 * this.weight;
+                    this.protein = (1.6 * this.weight).toFixed(1);
             } else {
                 if (this.activityLevel == SEDENTARY)
-                    this.protein = 0.8 * this.weight;
+                    this.protein = (0.8 * this.weight).toFixed(1);
                 else if (this.activityLevel == VERY_ACTIVE || this.activityLevel == EXTREMELY_ACTIVE)
-                    this.protein = 1.2 * this.weight;
+                    this.protein = (1.2 * this.weight).toFixed(1);
                 else
-                    this.protein = 1.0 * this.weight;
+                    this.protein = (1.0 * this.weight).toFixed(1);
             }
         }
     }
 
     calcFat() {
-        this.fat = this.weight * 0.85;
+        this.fat = (this.weight * 0.85).toFixed(1);
     }
 
     calcCarbs() {
-        this.carbs = (this.calories - this.protein * 4 - this.fat * 9) / 4;
+        this.carbs = ((this.calories - this.protein * 4 - this.fat * 9) / 4).toFixed(1);
     }
 
     printDiet() {
