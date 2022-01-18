@@ -14,7 +14,9 @@ const EXTREMELY_ACTIVE = 5;
 const MALE = 0;
 const FEMALE = 1;
 
+// Diet class contains all information and logic related to a users diet 
 class Diet {
+    // Constructor assigns all user input information and uses this information to generate nutritional information
     constructor(dietGoal, age, gender, height, weight, activityLevel, isWeightlifter, isOverweight) {
         this.dietGoal = dietGoal;
         this.age = age;
@@ -29,9 +31,9 @@ class Diet {
         this.calcProtein();
         this.calcFat();
         this.calcCarbs();
-    }
+    };
 
-    // Calculate the calories needed for the diet goal
+    // Calculate calorie intake for diet
     calcCalories() {
         let genderS = (this.gender === MALE) ? 5 : -161;
         let bmr = 10 * this.weight+6.25*this.height-5*this.age+genderS;
@@ -55,7 +57,7 @@ class Diet {
                 break;
             case EXTREMELY_ACTIVE:
                 activityLevelCalories =  bmr * 1.89;
-        }
+        };
 
         switch (this.dietGoal) {
             case LOSE_WEIGHT_FAST:
@@ -72,9 +74,10 @@ class Diet {
                 break;
             case GAIN_WEIGHT_FAST:
                 this.calories = (activityLevelCalories + 1000).toFixed(1);
-        }
-    }
+        };
+    };
 
+    // Calculate protein intake for diet
     calcProtein() {
         if (this.isOverweight === true) {
             if (this.isWeightlifter === true) 
@@ -94,18 +97,44 @@ class Diet {
                     this.protein = (1.2 * this.weight).toFixed(1);
                 else
                     this.protein = (1.0 * this.weight).toFixed(1);
-            }
-        }
-    }
+            };
+        };
+    };
 
+    // Calculate fat intake for diet
     calcFat() {
         this.fat = (this.weight * 0.85).toFixed(1);
-    }
+    };
 
+    // Calculate Carbohydrate intake for diet
     calcCarbs() {
         this.carbs = ((this.calories - this.protein * 4 - this.fat * 9) / 4).toFixed(1);
-    }
+    };
 
+    // generateDiet method generates an array of foods and returns in based on nutritional information and foods input
+    // Takes in an array of foods and returns an array of foods
+    // Takes in an array to account for future ability to add custom foods or set preferences
+    generateDiet(foods) {
+        let diet = [];
+        let remainingProtein = this.protein;
+        let remainingFat = this.fat;
+        let remainingCarbs = this.carbs;
+
+        for (let i = 0; i < foods.length; i++) {
+            let food = foods[i];
+
+            if (food.protein <= remainingProtein && food.fat <= remainingFat && food.carbs <= remainingCarbs) {
+                diet.push(food);
+                remainingProtein -= food.protein;
+                remainingFat -= food.fat;
+                remainingCarbs -= food.carbs;
+            }
+        };
+
+        this.foods = diet;
+    };
+
+    // Prints out all nutritional information for diet for debugging purposes
     printDiet() {
         console.log("Diet Goal: " + this.dietGoal);
         console.log("Age: " + this.age);

@@ -4,8 +4,53 @@ import { Button, Text, Card } from 'react-native-elements';
 import { Context as AuthContext } from '../context/AuthContext';
 import { NavigationEvents } from 'react-navigation';
 
-const NutritionScreen = ({ navigation, route }) => {
-    const newDiet = navigation.getParam('newDiet')
+// Temporary array of foods for testing
+let foods = [{
+        "name": "100g Chicken Breast (uncooked)",
+        "calories": 114,
+        "protein": 21,
+        "carbs": 0,
+        "fat": 3.6
+    }, {
+        "name": "One size 6 egg (uncooked)",
+        "calories": 65,
+        "protein": 5.9,
+        "carbs": 0.1,
+        "fat": 4.6
+    }, {
+        "name": "Two slices of white toast bread (1 serving)",
+        "calories": 93,
+        "protein": 3.35,
+        "carbs": 17.9,
+        "fat": 0.8,
+    }, {
+        "name": "One golden kiwifruit",
+        "calories": 45,
+        "protein": 1,
+        "carbs": 10.5,
+        "fat": 0.5,
+    }, {
+        "name": "250ml/One cup milk (one serving)",
+        "calories": 157,
+        "protein": 8.3,
+        "carbs": 11.9,
+        "fat": 8.5,
+    }, {
+        "name": "One scoop Optimum Nutrition whey",
+        "calories": 120,
+        "protein": 24,
+        "carbs": 3,
+        "fat": 1.5,
+    }
+];
+
+const NutritionScreen = ({ navigation }) => {
+    const newDiet = navigation.getParam('newDiet');
+
+    const submit = () => {
+        newDiet.generateDiet(foods);
+        navigation.navigate('ViewDiet', { newDiet });
+    };
 
     return (
         <View style={styles.buttonContainer}>           
@@ -46,6 +91,11 @@ const NutritionScreen = ({ navigation, route }) => {
                     <Text style={styles.label} h3>Fat: {newDiet.fat}</Text>
                 </View>
             </Card>
+            <Button
+                buttonStyle={styles.button}
+                title="Next"
+                onPress={() => submit()}
+            />
         </View>
     )
 };

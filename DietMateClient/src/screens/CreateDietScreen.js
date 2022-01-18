@@ -53,7 +53,7 @@ const CreateDietScreen = ({ navigation }) => {
         } else {
             const newDiet = new Diet(dietGoal, parseInt(age), gender, parseInt(height), parseInt(weight), activityLevel, isWeightlifter, isOverweight);
             newDiet.printDiet();
-            navigation.navigate('Nutrition', { newDiet : newDiet });
+            navigation.navigate('Nutrition', { newDiet });
         }
     };
 

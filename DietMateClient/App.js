@@ -11,6 +11,7 @@ import SignupScreen from './src/screens/SignupScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import CreateDietScreen from './src/screens/CreateDietScreen';
 import NutritionScreen from './src/screens/NutritionScreen';
+import ViewDietScreen from './src/screens/ViewDietScreen';  
 
 import { Provider as AuthProvider } from './src/context/AuthContext';
 
@@ -26,6 +27,7 @@ const switchNavigator = createSwitchNavigator({
     Home: HomeScreen,
     CreateDiet: CreateDietScreen,
     Nutrition: NutritionScreen,
+    ViewDiet: ViewDietScreen,
   }, {
     initialRouteName: 'Home',
   }),
